@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoom to Website</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #computer {
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, #8ecae6, #219ebc); /* Placeholder gradient */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-family: Arial, sans-serif;
+            transform-origin: center;
+            transform: scale(1);
+            transition: transform 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- image to a computer here-->
+>
+    <div id="computer"><img src="Screenshot 2024-11-25 110942.png" alt="Computer" style="width: 300px; height: 225px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><img src="2413304_54601.png" alt="Computer" style="width: 400px; height: 400px; position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%);"></div>
+
+    <script>
+        let zoomLevel = 1; // Initial zoom level
+        const maxZoomLevel = 3; // Maximum zoom level
+        const computerDiv = document.getElementById('computer');
+        let isZooming = false;
+
+        function zoom(event) {
+            if (isZooming) return; // Prevent multiple simultaneous animations
+
+            isZooming = true;
+
+            requestAnimationFrame(() => {
+                // Adjust zoom level
+                if (event.deltaY > 0) {
+                    zoomLevel += 0.02; // Zoom in slower
+                } else {
+                    zoomLevel -= 0.02; // Zoom out slower
+                }
+
+                // Clamp zoom level between 1 and maxZoomLevel
+                zoomLevel = Math.max(1, Math.min(zoomLevel, maxZoomLevel));
+                computerDiv.style.transform = `scale(${zoomLevel})`;
+
+                // Redirect if zoom level reaches the threshold
+                if (zoomLevel >= maxZoomLevel) {
+                    setTimeout(() => {
+                        window.location.href = 'index.html'; // Redirect to index.html
+                    }, 0); // Add a small delay for smooth transition
+                }
+
+                isZooming = false;
+            });
+        }
+
+        window.addEventListener('wheel', zoom);
+    </script>
+</body>
+</html>
